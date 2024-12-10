@@ -1,0 +1,19 @@
+---    
+- src: https://github.com/netriser/base
+  name: base
+  scm: git 
+- src: https://github.com/netriser/artifacts.elastic
+  name: artifacts.elastic
+  scm: git 
+- src: https://github.com/netriser/metricbeat_install
+  name: metricbeat_install
+  scm: git 
+- src: https://github.com/netriser/kubernetes_install
+  name: kubernetes_install
+  scm: git
+- src: https://github.com/netriser/elasticsearch_install
+  name: elasticsearch_install
+  scm: git
+- src: https://github.com/netriser/kibana_install
+  name: kibana_install
+  scm: git

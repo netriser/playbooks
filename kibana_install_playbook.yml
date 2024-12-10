@@ -1,0 +1,15 @@
+---
+- name: Install Kubernetes cluster
+  hosts: tag_app_kibana
+  become: yes
+  gather_facts: yes
+  vars:
+    kibana_version: "8.10.1"
+    metricbeat_modules: 
+    - kibana
+
+  roles:
+  - base
+  - artifacts.elastic
+  - kibana_install
+  - metricbeat_install

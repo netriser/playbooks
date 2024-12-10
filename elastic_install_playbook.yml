@@ -1,0 +1,15 @@
+---
+- name: Install Kubernetes cluster
+  hosts: tag_app_elastic
+  become: yes
+  gather_facts: yes
+  vars:
+    elasticsearch_version: "8.10.1"
+    metricbeat_modules: 
+    - elasticsearch
+
+  roles:
+  - base
+  - artifacts.elastic
+  - elasticsearch_install
+  - metricbeat_install

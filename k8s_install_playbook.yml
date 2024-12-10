@@ -1,0 +1,28 @@
+---
+- name: Install Kubernetes cluster first Master
+  hosts: tag_Name_k8s_master_1
+  become: yes
+  gather_facts: yes
+  vars:
+    kubernetes_minor_version: "1.30"
+    kubernetes_version_extention: "1-1.1"
+    
+  roles:
+    - base
+      #- kubernetes_install
+    - artifacts.elastic
+    - metricbeat_install
+
+- name: Install Kubernetes cluster other masters and workers
+  hosts: tag_app_k8s_*,!tag_Name_k8s_master_1
+  become: yes
+  gather_facts: yes
+  vars:
+    kubernetes_minor_version: "1.30"
+    kubernetes_version_extention: "1-1.1"
+    
+  roles:
+    - base
+    #- kubernetes_install
+    - artifacts.elastic
+    - metricbeat_install

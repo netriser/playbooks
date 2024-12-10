@@ -1,6 +1,11 @@
-- name: Hello World Sample
+- name: test playbook
   hosts: all
   tasks:
-    - name: Hello Message
-      shell: ip a
+    - name: Shell command
+      shell: "ip a && hostname && id"
+      register: __shell_output
+
+    - name: output shell
+      debug:
+      msg: "{{ __shell_output }}"
 

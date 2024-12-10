@@ -1,0 +1,23 @@
+plugin: yaml
+strict: false
+
+all:
+  children:
+    prod:
+      hosts:
+        node1:
+          ansible_host: node1.local
+        node2:
+          ansible_host: node2.local
+      vars:
+        env_name: "production"
+        app_path: "/var/www/prod"
+    dev:
+      hosts:
+        rt1:
+          ansible_host: rt1.local
+        rt2:
+          ansible_host: rt2.local
+      vars:
+        env_name: "development"
+        app_path: "/var/www/dev"

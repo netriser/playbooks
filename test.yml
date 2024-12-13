@@ -7,5 +7,5 @@
 
     - name: output shell
       debug:
-        msg: "{{ __shell_output }}"
+        msg: "{{ __shell_output.stdout }}"
 

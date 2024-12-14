@@ -1,0 +1,13 @@
+- name: Deploy htmls
+  hosts: all
+  gather_facts: true
+  tasks:
+    - name: Get host name
+      debug:
+        msg: "Node hostname is {{ ansible_hostname }}"
+
+    - name: Git checkout
+      ansible.builtin.git:
+        repo: 'https://github.com/netriser/nginx-app.git'
+        dest: /var/www/html/
+        #version: release-0.22

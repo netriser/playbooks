@@ -9,6 +9,6 @@
     - name: Git checkout
       ansible.builtin.git:
         repo: 'https://github.com/netriser/nginx-app.git'
-        dest: /var/www/
+        dest: /var/www/html
         force: yes
         #version: release-0.22

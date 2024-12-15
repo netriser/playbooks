@@ -14,7 +14,7 @@
         repo: 'https://github.com/netriser/nginx-app.git'
         dest: "{{ temp_depos_folder }}"
         force: yes
-        version: 0.0.1
+        version: "{{ APP_VERSION }}"
 
     - name: Get git app version
       ansible.builtin.slurp:

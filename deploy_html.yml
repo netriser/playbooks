@@ -53,7 +53,7 @@
     
     - name: Copy html folder from tmp to nginx home
       ansible.builtin.copy:
-        src: "{{ temp_depos_folder }}"
+        src: "{{ temp_depos_folder }}/"
         dest: "{{ nginx_home_directory }}"
         remote_src: yes
       when: __nginx_home_directory_check.stat.exists and __app_local_vresion['content'] != __app_git_vresion['content']

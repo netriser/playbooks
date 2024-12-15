@@ -48,7 +48,7 @@
         msg: "Version is {{ __app_local_vresion }}"
 
     - name: "Backup {{ nginx_home_directory }}"
-      ansible.builtin.command: "mv {{ nginx_home_directory }} /var/www/html_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}_{{ ansible_date_time.minute }}"
+      ansible.builtin.command: "mv {{ nginx_home_directory }} /var/www/html_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}"
       when: __nginx_home_directory_check.stat.exists and __app_local_vresion['content'] != __app_git_vresion['content']
     
     - name: Copy html folder from tmp to nginx home

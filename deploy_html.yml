@@ -3,7 +3,7 @@
   gather_facts: true
   vars:
     temp_depos_folder: "/tmp/git-depos"
-    nginx_home_directory: "/var/www/html"
+    app_home_directory: "/var/www/html"
   tasks:
     - name: Get host name
       ansible.builtin.debug:
@@ -11,7 +11,7 @@
 
     - name: Git checkout
       ansible.builtin.git:
-        repo: 'https://github.com/netriser/nginx-app.git'
+        repo: "https://github.com/netriser/{{ APP }}-app.git"
         dest: "{{ temp_depos_folder }}"
         force: yes
         version: "{{ APP_VERSION }}"
@@ -25,35 +25,35 @@
       ansible.builtin.debug:
         msg: "Version is {{ __app_git_vresion }}"
 
-    - name: "Check if {{ nginx_home_directory }} exist"
+    - name: "Check if {{ app_home_directory }} exist"
       ansible.builtin.stat:
-        path: "{{ nginx_home_directory }}"
-      register: __nginx_home_directory_check
+        path: "{{ app_home_directory }}"
+      register: __app_home_directory_check
 
     - name: Get local app version
       ansible.builtin.slurp:
-        src: "{{ nginx_home_directory }}/version.md"
+        src: "{{ app_home_directory }}/version.md"
       register: __app_local_vresion
-      when: __nginx_home_directory_check.stat.exists
+      when: __app_home_directory_check.stat.exists
       ignore_errors: true
 
     - name: Set variable __app_local_vresion if not exist
       ansible.builtin.set_fact:
         __app_local_vresion:
           content: ""
-      when: not __nginx_home_directory_check.stat.exists or __app_local_vresion.failed
+      when: not __app_home_directory_check.stat.exists or __app_local_vresion.failed
 
     - name: print local version
       ansible.builtin.debug:
         msg: "Version is {{ __app_local_vresion }}"
 
-    - name: "Backup {{ nginx_home_directory }}"
-      ansible.builtin.command: "mv {{ nginx_home_directory }} /var/www/html_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}"
-      when: __nginx_home_directory_check.stat.exists and __app_local_vresion['content'] != __app_git_vresion['content']
+    - name: "Backup {{ app_home_directory }}"
+      ansible.builtin.command: "mv {{ app_home_directory }} /var/www/html_{{ ansible_date_time.date }}_{{ ansible_date_time.hour }}-{{ ansible_date_time.minute }}"
+      when: __app_home_directory_check.stat.exists and __app_local_vresion['content'] != __app_git_vresion['content']
     
-    - name: Copy html folder from tmp to nginx home
+    - name: Copy html folder from tmp to APP home
       ansible.builtin.copy:
         src: "{{ temp_depos_folder }}/"
-        dest: "{{ nginx_home_directory }}"
+        dest: "{{ app_home_directory }}"
         remote_src: yes
-      when: __nginx_home_directory_check.stat.exists and __app_local_vresion['content'] != __app_git_vresion['content']
+      when: __app_home_directory_check.stat.exists and __app_local_vresion['content'] != __app_git_vresion['content']
